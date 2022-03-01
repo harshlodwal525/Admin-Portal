@@ -1,0 +1,83 @@
+<%- include('header.ejs') %>
+<h1> Welcome to Admin Portal! </h1>
+<form action="/allUsers" method="GET">
+  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+<a href="/addUser"> + ADD USER</a>
+<% let success_array=[] %>
+<% success.forEach (function(msg){ %>
+  <% success_array.push(msg) %>
+    <% })%>
+
+      <% let error_array=[] %>
+        <% errors.forEach (function(msg){ %>
+          <% error_array.push(msg) %>
+            <% })%>
+
+<table class="table table-success table-striped table-bordered "  id="example">
+  <thead class="thead-dark">
+      <tr>
+          <td> Name</td>
+          <td> Email</td>
+          <td>Contact</td>
+          <td>Username</td>
+          <td>Role</td>
+          <td>Profile Picture</td>
+          <td>Action</td>
+      </tr>
+  </thead>
+  <tbody>
+      <% for (var i=0; i < user.length; i++) {%>
+          <tr>
+              <td>
+                  <%= user[i].name %>
+              </td>
+              <td>
+                  <%= user[i].email %>
+              </td>
+              <td>
+                <%= user[i].contact %>
+            </td>
+            <td>
+                <%= user[i].username %>
+                <% datee = user[i].created %>
+                <% date1=datee.toUTCString()   %>
+                <%= date2= new Date() %>
+                <% p= date2.getTimezoneOffset() %>
+            
+         
+                <% var d = new Date(date1) %>
+                <%= d %>
+                
+            </td>
+            <td>
+                <%= user[i].role %>
+                <%= user[i].createdAt %>
+            </td>
+            <td>
+                <img src="<%= user[i].img %>" width="100" class="img-thumbnail mt-1"/>
+            </td>
+              <td> <a href="/edit/<%= user[i].id  %>"> <i class="far fa-edit"></i></a> ||  <a href="/delete/<%= user[i].id  %>"><i class="fal fa-trash-alt"></i></a> </td>
+          </tr>
+          <%}%>
+  </tbody>
+</table>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    let error_msg = "<%= error_array %>"
+    if (error_msg != "") {
+      toastr.options.showMethod = 'slideDown';
+      toastr.error(error_msg)
+    }
+    let success_msg = "<%= success_array %>"
+    if (success_msg != "") {
+      toastr.options.showEasing = 'easeOutBounce';
+      toastr.success(success_msg)
+    }
+  });
+</script>
+<%- include('footer.ejs') %>

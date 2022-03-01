@@ -1,0 +1,42 @@
+<%- include('header.ejs') %>
+
+  <h1>Welcome to Admin Portal</h1>
+  <form action="/auth" method="POST">
+
+    <% let success_array=[] %>
+      <% success.forEach (function(msg){ %>
+        <% success_array.push(msg) %>
+          <% })%>
+
+            <% let error_array=[] %>
+              <% errors.forEach (function(msg){ %>
+                <% error_array.push(msg) %>
+                  <% })%>
+
+                   
+                            <input type="text" name="username" class="input-field" placeholder="Username" />
+                            <input type="password" name="password" class="input-field" placeholder="Password" />
+                            <button type="submit" class="btn btn-outline-success">Submit</button>
+  </form>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      let error_msg = "<%= error_array %>"
+      if (error_msg != "") {
+        toastr.options.showMethod = 'slideDown';
+        toastr.warning(error_msg)
+      }
+      let success_msg = "<%= success_array %>"
+      if (success_msg != "") {
+        toastr.options.showMethod = 'slideDown';
+        toastr.success(success_msg)
+      }
+
+  
+
+
+    });
+  </script>
+  <%- include('footer.ejs') %>
